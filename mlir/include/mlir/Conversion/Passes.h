@@ -75,6 +75,7 @@
 #include "mlir/Conversion/VectorToSCF/VectorToSCF.h"
 #include "mlir/Conversion/VectorToSPIRV/VectorToSPIRVPass.h"
 #include "mlir/Conversion/TensorToEmitC/TensorToEmitCPass.h"
+#include "mlir/Conversion/LinalgToEmitC/LinalgToEmitCPass.h"
 
 namespace mlir {
 

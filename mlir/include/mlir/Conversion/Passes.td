@@ -1351,4 +1351,10 @@ def ConvertTensorToEmitC : Pass<"convert-tensor-to-emitc"> {
   let dependentDialects = ["emitc::EmitCDialect"];
 }
 
+def ConvertLinalgToEmitC :
+Pass<"convert-linalg-to-emitc"> {
+  let summary = "Convert Linalg dialect to EmitC dialect";
+  let dependentDialects = ["emitc::EmitCDialect"];
+}
+
 #endif // MLIR_CONVERSION_PASSES

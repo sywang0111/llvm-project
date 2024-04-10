@@ -77,30 +77,6 @@ public:
   }
 };
 
-// class SelectOpConversion : public OpConversionPattern<tensor::SelectOp> {
-// public:
-//   using OpConversionPattern<tensor::SelectOp>::OpConversionPattern;
-
-//   LogicalResult
-//   matchAndRewrite(tensor::SelectOp selectOp, OpAdaptor adaptor,
-//                   ConversionPatternRewriter &rewriter) const override {
-
-//     Type dstType = getTypeConverter()->convertType(selectOp.getType());
-//     if (!dstType)
-//       return rewriter.notifyMatchFailure(selectOp, "type conversion failed");
-
-//     if (!adaptor.getCondition().getType().isInteger(1))
-//       return rewriter.notifyMatchFailure(
-//           selectOp,
-//           "can only be converted if condition is a scalar of type i1");
-
-//     rewriter.replaceOpWithNewOp<emitc::ConditionalOp>(selectOp, dstType,
-//                                                       adaptor.getOperands());
-
-//     return success();
-//   }
-// };
-
 } // namespace
 
 //===----------------------------------------------------------------------===//
@@ -113,14 +89,9 @@ void mlir::populateTensorToEmitCPatterns(TypeConverter &typeConverter,
 
   // clang-format off
   patterns.add<
-    // DimOpConversionPattern,
-    // TensorConstantOpConversionPattern,
     TensorOpConversion<tensor::DimOp, emitc::CallOpaqueOp>,
     TensorOpConversion<tensor::ExtractSliceOp, emitc::CallOpaqueOp>,
     TensorOpConversion<tensor::InsertSliceOp, emitc::CallOpaqueOp>
-    // TensorOpConversion<tensor::MulFOp, emitc::MulOp>,
-    // TensorOpConversion<tensor::SubFOp, emitc::SubOp>,
-    // SelectOpConversion
   >(typeConverter, ctx);
   // clang-format on
 }
