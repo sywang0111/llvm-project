@@ -39,6 +39,22 @@ public:
   }
 };
 
+class ArithMinSIOpConversionPattern
+    : public OpConversionPattern<arith::MinSIOp> {
+public:
+  using OpConversionPattern::OpConversionPattern;
+
+  LogicalResult
+  matchAndRewrite(arith::MinSIOp minsi,
+                  arith::MinSIOp::Adaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
+    //::mlir::emitc::CmpPredicateAttr
+    rewriter.replaceOpWithNewOp<emitc::CmpOp>(
+        minsi, minsi.getType(), emitc::CmpPredicate::lt, adaptor.getLhs(), adaptor.getRhs());
+    return success();
+  }
+};
+
 template <typename ArithOp, typename EmitCOp>
 class ArithOpConversion final : public OpConversionPattern<ArithOp> {
 public:
@@ -92,9 +108,12 @@ void mlir::populateArithToEmitCPatterns(TypeConverter &typeConverter,
   // clang-format off
   patterns.add<
     ArithConstantOpConversionPattern,
+    ArithMinSIOpConversionPattern,
     ArithOpConversion<arith::AddFOp, emitc::AddOp>,
+    ArithOpConversion<arith::AddIOp, emitc::AddOp>,
     ArithOpConversion<arith::DivFOp, emitc::DivOp>,
     ArithOpConversion<arith::MulFOp, emitc::MulOp>,
+    ArithOpConversion<arith::MulIOp, emitc::MulOp>,
     ArithOpConversion<arith::SubFOp, emitc::SubOp>,
     SelectOpConversion
   >(typeConverter, ctx);
