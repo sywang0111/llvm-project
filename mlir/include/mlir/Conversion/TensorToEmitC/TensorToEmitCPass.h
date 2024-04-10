@@ -1,0 +1,14 @@
+
+#ifndef MLIR_CONVERSION_TENSORTOEMITC_TENSORTOEMITCPASS_H
+#define MLIR_CONVERSION_TENSORTOEMITC_TENSORTOEMITCPASS_H
+
+#include <memory>
+
+namespace mlir {
+class Pass;
+
+#define GEN_PASS_DECL_CONVERTTENSORTOEMITC
+#include "mlir/Conversion/Passes.h.inc"
+} // namespace mlir
+
+#endif // MLIR_CONVERSION_TENSORTOEMITC_TENSORTOEMITCPASS_H

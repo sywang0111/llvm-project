@@ -1346,4 +1346,9 @@ def ConvertVectorToSPIRV : Pass<"convert-vector-to-spirv"> {
   let dependentDialects = ["spirv::SPIRVDialect"];
 }
 
+def ConvertTensorToEmitC : Pass<"convert-tensor-to-emitc"> {
+  let summary = "Convert Tensor dialect to EmitC dialect";
+  let dependentDialects = ["emitc::EmitCDialect"];
+}
+
 #endif // MLIR_CONVERSION_PASSES
